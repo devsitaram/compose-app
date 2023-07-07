@@ -1,73 +1,83 @@
 package com.sitaram.composeapp.features.game
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import com.sitaram.composeapp.R
 import com.sitaram.composeapp.features.game.pojo.GameItems
 
+
+//private const val TAG = "GameScreen"
 val gameViewModel = GameViewModel()
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun GameScreen(list: List<Any>? = null) {
 
     val context = LocalContext.current
 
-    gameViewModel.getGames(context, onListReceived = {
+    val gameList = remember {
+        mutableStateOf(ArrayList<GameItems>())
+    }
 
-//        Column(modifier = Modifier.fillMaxSize()) {
-//            // Display the list of games
-//            getGame(onListReceived)
-//        }
-    })
+    LaunchedEffect(true) {
+        gameViewModel.getGames(context) {
+            gameList.value = it as ArrayList<GameItems>
+        }
+    }
+    getListOfGames(gameList)
 }
-
 
 @SuppressLint("ComposableNaming")
 @Composable
-fun getGame(gameList: List<GameItems>?) {
-    if (gameList != null) {
+fun getListOfGames(gameList: MutableState<ArrayList<GameItems>>) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp)
+    ) {
         LazyColumn {
-            items(gameList) { game ->
-                Text(text = game.title.toString())
+            items(gameList.value.size) {
+                Text(text = gameList.value[it].id.toString() ?: "id")
+                Text(text = gameList.value[it].title ?: "title")
+                 val txt = gameList.value[it].shortDescription?.let { desc -> Text(text = desc) }
+
+                Text(text = txt.toString())
+
+                Image(
+                    painter = rememberAsyncImagePainter(gameList.value[it].thumbnail ?: "image"),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxWidth().height(250.dp)
+                )
+
+                Text(text = gameList.value[it].releaseDate ?: "releaseDate")
+                Text(text = gameList.value[it].freetogameProfileUrl ?: "freetogameProfileUrl")
+                Text(text = gameList.value[it].genre ?: "genre")
+                Text(text = gameList.value[it].publisher ?: "publisher")
+                Text(text = gameList.value[it].developer ?: "developer")
+                Text(text = gameList.value[it].platform ?: "platform")
             }
         }
-    } else {
-        // Show a loading indicator or error message when the list of games is null
-        Text(text = "Loading...")
     }
 }
-
-
-//@Composable
-//fun GameScreens(list: List<Any>? = null) {
-//
-//    val model: GameViewModel = viewModel()
-//    val context = LocalContext.current
-//
-//    LaunchedEffect(key1 = true) {
-//        model.getGames(context) // Fetch the list of games
-//    }
-//
-//    val gameList: List<GameItems> by model.games.observeAsState(emptyList())
-//
-//    Column(modifier = Modifier.fillMaxSize()) {
-//        // Display the list of games
-//        getGame(gameList)
-//    }
-//}
-
-
-////    val context = LocalContext.current
-//    val gameViewModel = GameViewModel()
-////    gameViewModel.getGames(context) // call the getGames methods
-////
-//    val listOfGames = gameViewModel.gamesList
-////
-//    Column(modifier = Modifier.fillMaxSize()) {
-//        // Display the list of games
-//        getGame(listOfGames)
-//    }
-//}

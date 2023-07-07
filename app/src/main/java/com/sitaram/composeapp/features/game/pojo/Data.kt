@@ -13,4 +13,3 @@ data class GameItems(
 	val developer: String? = null,
 	val platform: String? = null
 )
-

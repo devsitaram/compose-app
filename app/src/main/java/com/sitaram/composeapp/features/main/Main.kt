@@ -30,7 +30,7 @@ import com.sitaram.composeapp.features.setting.SettingsScreen
 
 @Composable
 fun NavigationAppHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "Login") {
+    NavHost(navController = navController, startDestination = "Main") {
         // login
         composable(User.Login.route) {
             ViewOfLoginScreen(navController)

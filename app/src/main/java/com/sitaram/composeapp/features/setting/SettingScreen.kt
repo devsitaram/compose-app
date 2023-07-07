@@ -9,24 +9,42 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LeadingIconTab
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.PagerState
 import com.sitaram.composeapp.R
+import com.sitaram.composeapp.features.setting.data.TabItem
+import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen() {
@@ -55,11 +73,7 @@ fun SettingsScreen() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Setting",
-                color = Color.White,
-                fontSize = 50.sp
-            )
+            Calculation()
         }
 
         // if press the button the show the dialog box
@@ -95,38 +109,43 @@ fun DialogBox(onDismiss: () -> Unit) {
     )
 }
 
-//@OptIn(ExperimentalPagerApi::class)
-//@Composable
-//fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
-//    val scope = rememberCoroutineScope()
-//    // or ScrollableToRow
-//    TabRow(
-//        selectedTabIndex = pagerState.currentPage,
-//        Modifier.background(color = colorResource(id = androidx.appcompat.R.color.primary_dark_material_light)),
-//        contentColor = Color.White,
-//        indicator = { tabPositions ->
-//            TabRowDefaults.Indicator(
-////                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
-//            )
-//        }
-//    ) {
-//        tabs.forEachIndexed { index, tab ->
-//            // OR Tab()
-//            LeadingIconTab(
-//                icon = { Icon(painter = painterResource(id = tab.icon), contentDescription = "") },
-//                text = { Text(tab.title) },
-//                selected = pagerState.currentPage == index,
-//                onClick = {
-//                    scope.launch {
-//                        pagerState.animateScrollToPage(index)
-//                    }
-//                },
-//            )
-//        }
-//    }
-//}
+@OptIn(ExperimentalPagerApi::class, ExperimentalPagerApi::class)
+@Composable
+fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
+    val scope = rememberCoroutineScope()
+    // or ScrollableToRow
+    TabRow(
+        selectedTabIndex = pagerState.currentPage,
+        Modifier.background(color = Color.DarkGray),
+        contentColor = Color.White,
+        indicator = { tabPositions ->
+            TabRowDefaults.Indicator(
+//                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+            )
+        }
+    ) {
+        tabs.forEachIndexed { index, tabItem ->
+            // OR Tab()
+            LeadingIconTab(
+                icon = {
+                    Icon(
+                        painter = painterResource(id = tabItem.icon),
+                        contentDescription = ""
+                    )
+                },
+                text = { Text(tabItem.title) },
+                selected = pagerState.currentPage == index,
+                onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(index)
+                    }
+                },
+            )
+        }
+    }
+}
 
-//
+
 //@OptIn(ExperimentalFoundationApi::class)
 //@ExperimentalPagerApi
 //@Composable
@@ -214,5 +233,40 @@ fun NewsScreen() {
         verticalArrangement = Arrangement.Center
     ) {
         Text(text = "Book Screen")
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun Calculation() {
+    var buyingPrice by remember {
+        mutableStateOf("")
+    }
+
+    var noOfShares by remember {
+        mutableStateOf("")
+    }
+
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(15.dp)
+        ) {
+            OutlinedTextField(
+                value = buyingPrice,
+                onValueChange = { buyingPrice = it },
+                label = { Text(text = "Enter the valid number")},
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                modifier = Modifier
+                    .width(350.dp)
+                    .padding(5.dp),
+            )
+        }
     }
 }
