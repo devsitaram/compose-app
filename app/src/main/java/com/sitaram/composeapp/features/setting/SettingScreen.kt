@@ -24,7 +24,6 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -118,11 +117,11 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
         selectedTabIndex = pagerState.currentPage,
         Modifier.background(color = Color.DarkGray),
         contentColor = Color.White,
-        indicator = { tabPositions ->
-            TabRowDefaults.Indicator(
-//                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
-            )
-        }
+//        indicator = { tabPositions ->
+//            TabRowDefaults.Indicator(
+////                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+//            )
+//        }
     ) {
         tabs.forEachIndexed { index, tabItem ->
             // OR Tab()
@@ -240,12 +239,29 @@ fun NewsScreen() {
 @Preview
 @Composable
 fun Calculation() {
+
     var buyingPrice by remember {
         mutableStateOf("")
     }
 
     var noOfShares by remember {
         mutableStateOf("")
+    }
+
+    var shareAmount = 0
+    var SEBONCommission = 0
+    var brokerCommission = 10
+    var DPFee = 25
+    var totalPayableAmount = 0
+    var costPericePerShare = 0
+
+    if (buyingPrice.isNotEmpty() && noOfShares.isNotEmpty()) {
+        if (buyingPrice.isNotEmpty() && noOfShares.isNotEmpty()) {
+            shareAmount = buyingPrice.toInt() * noOfShares.toInt()
+
+            totalPayableAmount = shareAmount + brokerCommission + DPFee
+//            costPericePerShare = totalPayableAmount / noOfShares
+        }
     }
 
     Surface(
@@ -261,12 +277,73 @@ fun Calculation() {
             OutlinedTextField(
                 value = buyingPrice,
                 onValueChange = { buyingPrice = it },
-                label = { Text(text = "Enter the valid number")},
+                label = { Text(text = "Buying Price") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 modifier = Modifier
                     .width(350.dp)
                     .padding(5.dp),
             )
+
+            OutlinedTextField(
+                value = noOfShares,
+                onValueChange = { noOfShares = it },
+                label = { Text(text = "No of shares") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                modifier = Modifier
+                    .width(350.dp)
+                    .padding(5.dp),
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+            ) {
+                Text(text = "Share Amount")
+                Text(text = "Rs $shareAmount")
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
+                Text(text = "SEBON Commission")
+                Text(text = "Rs $")
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
+                Text(text = "Broker Commission (0.40%)")
+                Text(text = "Rs 4")
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
+                Text(text = "DP Fee")
+                Text(text = "Rs $")
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
+
+                Text(text = "Total Payable Amount")
+                Text(text = "Rs $totalPayableAmount")
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
+                Text(text = "Cost Price Per Share")
+                Text(text = "Rs $costPericePerShare")
+            }
         }
     }
 }
