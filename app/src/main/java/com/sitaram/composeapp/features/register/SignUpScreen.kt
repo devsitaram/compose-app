@@ -143,7 +143,7 @@ fun ViewOfSignUpScreen(navController: NavHostController){
             )
 
             Spacer(modifier = Modifier.height(70.dp))
-            Divider(modifier = Modifier.fillMaxWidth()) // usign the divider
+            Divider(modifier = Modifier.fillMaxWidth()) // using the divider
             // register text
             Row(
                 modifier = Modifier.fillMaxWidth(),

@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -36,7 +37,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontVariation.width
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -44,6 +47,9 @@ import com.google.accompanist.pager.PagerState
 import com.sitaram.composeapp.R
 import com.sitaram.composeapp.features.setting.data.TabItem
 import kotlinx.coroutines.launch
+import java.lang.String.format
+import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 @Composable
 fun SettingsScreen() {
@@ -248,19 +254,36 @@ fun Calculation() {
         mutableStateOf("")
     }
 
-    var shareAmount = 0
-    var SEBONCommission = 0
-    var brokerCommission = 10
-    var DPFee = 25
-    var totalPayableAmount = 0
-    var costPericePerShare = 0
+    var formattedShareAmount =  "0"
+    var formattedSEBONCommission = "0"
+    var formattedBrokerCommission = "0"
+    val DP_Fee = 25.0
+    var formattedTotalPayableAmount = "0"
+    var formattedCostPericePerShare = "0"
+
+//    var shareAmount = 0.0
+//    var SEBONCommission = 0.0
+//    var brokerCommission = 10.0
+//    val DP_Fee = 25.0
+//    var totalPayableAmount = 0.0
+//    var costPericePerShare = 0.0
 
     if (buyingPrice.isNotEmpty() && noOfShares.isNotEmpty()) {
         if (buyingPrice.isNotEmpty() && noOfShares.isNotEmpty()) {
-            shareAmount = buyingPrice.toInt() * noOfShares.toInt()
 
-            totalPayableAmount = shareAmount + brokerCommission + DPFee
-//            costPericePerShare = totalPayableAmount / noOfShares
+
+            val shareAmount = buyingPrice.toDouble() * noOfShares.toDouble()
+            val SEBONCommission = ((shareAmount) * 0.015 / 100)
+            val brokerCommission = (shareAmount * 0.40) / 100
+            val totalPayableAmount = shareAmount + brokerCommission + DP_Fee
+            val costPericePerShare = totalPayableAmount / noOfShares.toDouble()
+
+            val decimalFormat = DecimalFormat("#.##")
+            formattedShareAmount = decimalFormat.format(shareAmount)
+            formattedSEBONCommission = decimalFormat.format(SEBONCommission)
+            formattedBrokerCommission = decimalFormat.format(brokerCommission)
+            formattedTotalPayableAmount = decimalFormat.format(totalPayableAmount)
+            formattedCostPericePerShare = decimalFormat.format(costPericePerShare)
         }
     }
 
@@ -299,15 +322,17 @@ fun Calculation() {
                     .padding(10.dp),
             ) {
                 Text(text = "Share Amount")
-                Text(text = "Rs $shareAmount")
+                Spacer(modifier = Modifier.width(140.dp))
+                Text(text = "Rs $formattedShareAmount", textAlign = TextAlign.End)
             }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp)
             ) {
-                Text(text = "SEBON Commission")
-                Text(text = "Rs $")
+                Text(text = "SE-BON Commission")
+                Spacer(modifier = Modifier.width(95.dp))
+                Text(text = "Rs $formattedSEBONCommission")
             }
             Row(
                 modifier = Modifier
@@ -315,7 +340,8 @@ fun Calculation() {
                     .padding(10.dp)
             ) {
                 Text(text = "Broker Commission (0.40%)")
-                Text(text = "Rs 4")
+                Spacer(modifier = Modifier.width(55.dp))
+                Text(text = "Rs $formattedBrokerCommission")
             }
             Row(
                 modifier = Modifier
@@ -323,7 +349,8 @@ fun Calculation() {
                     .padding(10.dp)
             ) {
                 Text(text = "DP Fee")
-                Text(text = "Rs $")
+                Spacer(modifier = Modifier.width(185.dp))
+                Text(text = "Rs $DP_Fee")
             }
 
             Row(
@@ -333,7 +360,8 @@ fun Calculation() {
             ) {
 
                 Text(text = "Total Payable Amount")
-                Text(text = "Rs $totalPayableAmount")
+                Spacer(modifier = Modifier.width(90.dp))
+                Text(text = "Rs $formattedTotalPayableAmount")
             }
 
             Row(
@@ -342,7 +370,8 @@ fun Calculation() {
                     .padding(10.dp)
             ) {
                 Text(text = "Cost Price Per Share")
-                Text(text = "Rs $costPericePerShare")
+                Spacer(modifier = Modifier.width(100.dp))
+                Text(text = "Rs $formattedCostPericePerShare")
             }
         }
     }
