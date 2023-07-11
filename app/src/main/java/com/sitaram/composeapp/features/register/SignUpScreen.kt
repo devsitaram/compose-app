@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -110,7 +109,6 @@ fun ViewOfSignUpScreen(navController: NavHostController){
             // email
             InputTextField(
                 userEmail,
-                painterResource(id = R.drawable.ic_email),
                 onValueChange = { userEmail = it },
                 label = stringResource(id = R.string.userEmail),
                 "Enter the valid email"
@@ -119,7 +117,6 @@ fun ViewOfSignUpScreen(navController: NavHostController){
             // username
             InputTextField(
                 userName,
-                painterResource = painterResource(id = R.drawable.ic_person),
                 onValueChange = { userName = it },
                 label = stringResource(id = R.string.userName),
                 "Enter the valid username"

@@ -78,7 +78,12 @@ fun HeadingTextComponent(value: String, color: Color) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InputTextField(value: String, painterResource: Painter, onValueChange: (String) -> Unit = {}, label: String, error: String) {
+fun InputTextField(
+    value: String,
+    onValueChange: (String) -> Unit = {},
+    label: String,
+    error: String
+) {
     Column {
         OutlinedTextField(
             value = value,
@@ -97,7 +102,7 @@ fun InputTextField(value: String, painterResource: Painter, onValueChange: (Stri
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             leadingIcon = {
-                Icon(painter = painterResource, contentDescription = "")
+                Icon(painter = painterResource(R.drawable.ic_person), contentDescription = "")
             },
         )
         // if the fields is empty then show error message
@@ -134,22 +139,19 @@ fun PasswordTextField(
                 cursorColor = Purple
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            // lest side icon
             leadingIcon = {
                 Icon(painter = painterResource, contentDescription = "")
             },
+            // right side icon
             trailingIcon = {
                 val iconImage = if (passwordVisible.value) {
                     painterResource(R.drawable.ic_password_invisible)
                 } else {
                     painterResource(R.drawable.ic_password_visible)
                 }
-                val description = if (passwordVisible.value) {
-                    "Hide password"
-                } else {
-                    "Show password"
-                }
                 IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
-                    Icon(painter = iconImage, contentDescription = description)
+                    Icon(painter = iconImage, contentDescription = null)
                 }
             },
             visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation()

@@ -18,7 +18,6 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -102,7 +101,6 @@ fun ViewOfLoginScreen(navController: NavHostController) {
             // username
             InputTextField(
                 userName,
-                painterResource = painterResource(id = R.drawable.ic_person),
                 onValueChange = { userName = it },
                 label = stringResource(id = R.string.userName),
                 "Enter the valid username"
