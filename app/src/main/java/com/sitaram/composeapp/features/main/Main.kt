@@ -24,13 +24,13 @@ import com.sitaram.composeapp.features.game.GameScreen
 import com.sitaram.composeapp.features.home.HomeScreen
 import com.sitaram.composeapp.features.login.ViewOfLoginScreen
 import com.sitaram.composeapp.features.message.MessageScreen
-import com.sitaram.composeapp.features.navigation.ProfileScreen
+import com.sitaram.composeapp.features.profile.ProfileScreen
 import com.sitaram.composeapp.features.register.ViewOfSignUpScreen
 import com.sitaram.composeapp.features.setting.SettingsScreen
 
 @Composable
 fun NavigationAppHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "Main") {
+    NavHost(navController = navController, startDestination = "Login") {
         // login
         composable(User.Login.route) {
             ViewOfLoginScreen(navController)
