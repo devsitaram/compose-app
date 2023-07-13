@@ -77,7 +77,7 @@ fun ViewOfSignUpScreen(navController: NavHostController){
                 navController.navigate(User.Login.route)
             }
         } else {
-            Toast.makeText(context, "Invalid username!", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "The fields is empty!", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -122,6 +122,7 @@ fun ViewOfSignUpScreen(navController: NavHostController){
                 "Enter the valid username"
             )
 
+            Spacer(modifier = Modifier.padding(top = 10.dp))
             // password
             PasswordTextField(
                 userPassword,
@@ -143,7 +144,7 @@ fun ViewOfSignUpScreen(navController: NavHostController){
             Divider(modifier = Modifier.fillMaxWidth()) // using the divider
             // register text
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
                 NormalTextComponent(
@@ -186,11 +187,13 @@ fun LoginTextComponent(text: String, navController: NavHostController) {
             .wrapContentHeight()
             .padding(horizontal = 5.dp),
         style = TextStyle(
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold,
             fontStyle = FontStyle.Normal
         ),
+
         onClick = {
             navController.navigate(User.Login.route)
-        })
+        },
+    )
 }

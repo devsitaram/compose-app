@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,7 +37,7 @@ val gameViewModel = GameViewModel()
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
-fun GameScreen(list: List<Any>? = null) {
+fun GameScreen() {
 
     val context = LocalContext.current
 
@@ -49,6 +50,7 @@ fun GameScreen(list: List<Any>? = null) {
             gameList.value = it as ArrayList<GameItems>
         }
     }
+
     getListOfGames(gameList)
 }
 
@@ -62,9 +64,8 @@ fun getListOfGames(gameList: MutableState<ArrayList<GameItems>>) {
                     .fillMaxSize()
                     .padding(20.dp)
             ) {
-                Text(text = gameList.value[it].id.toString() ?: "id")
+                Text(text = gameList.value[it].id.toString())
                 Text(text = gameList.value[it].title ?: "title")
-                Text(text = gameList.value[it].shortDescription ?: "descriptions")
                 Image(
                     painter = rememberAsyncImagePainter(gameList.value[it].thumbnail ?: "image"),
                     contentDescription = null,
@@ -72,6 +73,7 @@ fun getListOfGames(gameList: MutableState<ArrayList<GameItems>>) {
                         .fillMaxWidth()
                         .height(250.dp)
                 )
+                Text(text = gameList.value[it].shortDescription ?: "descriptions")
                 Text(text = gameList.value[it].releaseDate ?: "releaseDate")
                 Text(text = gameList.value[it].freetogameProfileUrl ?: "freetogameProfileUrl")
                 Text(text = gameList.value[it].genre ?: "genre")
@@ -79,6 +81,7 @@ fun getListOfGames(gameList: MutableState<ArrayList<GameItems>>) {
                 Text(text = gameList.value[it].developer ?: "developer")
                 Text(text = gameList.value[it].platform ?: "platform")
             }
+            Divider(modifier = Modifier.fillMaxWidth().padding(20.dp)) // divider
         }
     }
 }

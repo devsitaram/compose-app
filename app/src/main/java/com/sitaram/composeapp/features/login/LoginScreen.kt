@@ -3,7 +3,6 @@ package com.sitaram.composeapp.features.login
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,16 +11,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material3.Button
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -46,11 +47,11 @@ import com.sitaram.composeapp.features.main.User
 // Main/Parent UI design for Sign Up Screen
 @Composable
 fun ViewOfLoginScreen(navController: NavHostController) {
+
     val context = LocalContext.current
     val loginViewModel = LoginViewModel()
 
     var userName by remember { mutableStateOf("") }
-
     var userPassword by remember { mutableStateOf("") }
 
     // Login button click handler
@@ -65,8 +66,6 @@ fun ViewOfLoginScreen(navController: NavHostController) {
                 }
             }
             Toast.makeText(context, "Login Successful.", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, "Invalid username or password", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -78,7 +77,6 @@ fun ViewOfLoginScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .padding(30.dp),
         ) {
-
             NormalTextComponent(
                 text = stringResource(id = R.string.hey),
                 color = colorResource(id = color.softBlack)
@@ -99,6 +97,7 @@ fun ViewOfLoginScreen(navController: NavHostController) {
                 "Enter the valid username"
             )
 
+            Spacer(modifier = Modifier.padding(top = 10.dp))
             // password
             PasswordTextField(
                 userPassword,
@@ -122,7 +121,9 @@ fun ViewOfLoginScreen(navController: NavHostController) {
             Divider(modifier = Modifier.fillMaxWidth()) // divider
             // register text
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
                 NormalTextComponent(
@@ -141,14 +142,41 @@ fun ViewOfLoginScreen(navController: NavHostController) {
 @Composable
 fun LoginButton(value: String, onClickAction: () -> Unit) {
     Button(
+        onClick = onClickAction,
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp),
-        contentPadding = PaddingValues(15.dp),
-        onClick = onClickAction,
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent) // Change the button color here
     ) {
-        Text(text = value, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
+        Text(
+            fontSize = 20.sp,
+            text = value,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(10.dp)
+        )
     }
+//    Button(
+//        onClick = onClickAction,
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(10.dp),
+//    ) {
+//        Text(
+//            fontSize = 20.sp,
+//            text = value,
+//            fontWeight = FontWeight.SemiBold,
+//            color = DefaultShadowColor
+//        )
+//    }
+//    Button(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(10.dp),
+//        contentPadding = PaddingValues(15.dp),
+//        onClick = onClickAction,
+//    ) {
+//        Text(text = value, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
+//    }
 }
 
 // account
@@ -160,8 +188,8 @@ fun RegisterTextComponent(value: String, navController: NavController) {
             .wrapContentHeight()
             .padding(horizontal = 5.dp),
         style = TextStyle(
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold,
             fontStyle = FontStyle.Normal
         ),
         onClick = {

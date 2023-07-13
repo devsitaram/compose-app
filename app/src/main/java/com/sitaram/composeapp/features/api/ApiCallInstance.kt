@@ -12,7 +12,6 @@ import retrofit2.http.Query
 class ApiCallInstance {
 
     companion object {
-
         private var retrofit: Retrofit? = null
         private const val BASE_URL = "https://www.freetogame.com/api/"
 

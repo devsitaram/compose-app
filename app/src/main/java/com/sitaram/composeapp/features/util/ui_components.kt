@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -47,7 +49,7 @@ fun NormalTextComponent(text: String, color: Color) {
             .wrapContentHeight()
             .padding(horizontal = 5.dp),  // Specify the desired padding value
         style = TextStyle(
-            fontSize = 24.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal
         ),
@@ -55,7 +57,6 @@ fun NormalTextComponent(text: String, color: Color) {
         color = color
     )
 }
-
 
 // heading text
 @Composable
@@ -65,10 +66,10 @@ fun HeadingTextComponent(value: String, color: Color) {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(top = 5.dp),
+            .padding(top = 10.dp),
         style = TextStyle(
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.SemiBold,
             fontStyle = FontStyle.Normal
         ),
         color = color,
@@ -85,6 +86,12 @@ fun InputTextField(
     error: String
 ) {
     Column {
+        // if the fields is empty then show error message
+        if (value.isEmpty()) {
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(text = error, color = Color.Red)
+        }
+        // input text fields
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
@@ -92,7 +99,7 @@ fun InputTextField(
                 .fillMaxWidth()
                 .height(70.dp)
                 .padding(top = 5.dp),
-            // hint
+            // text fields bar's text
             label = {
                 Text(label)
             },
@@ -105,11 +112,6 @@ fun InputTextField(
                 Icon(painter = painterResource(R.drawable.ic_person), contentDescription = "")
             },
         )
-        // if the fields is empty then show error message
-        if (value.isEmpty()) {
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = error, color = Color.Red)
-        }
     }
 }
 
@@ -124,6 +126,11 @@ fun PasswordTextField(
 ) {
     Column {
         val passwordVisible = remember { mutableStateOf(false) }
+        // if the fields is empty then show error message
+        if (value.isEmpty()) {
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(text = "Enter the valid password", color = Color.Red)
+        }
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
@@ -146,6 +153,7 @@ fun PasswordTextField(
             // right side icon
             trailingIcon = {
                 val iconImage = if (passwordVisible.value) {
+//                    Icons.Filled.Visibility
                     painterResource(R.drawable.ic_password_invisible)
                 } else {
                     painterResource(R.drawable.ic_password_visible)
@@ -156,11 +164,6 @@ fun PasswordTextField(
             },
             visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation()
         )
-        // if the fields is empty then show error message
-        if (value.isEmpty()) {
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Enter the valid password", color = Color.Red)
-        }
     }
 }
 
@@ -183,95 +186,7 @@ fun CheckboxComponent() {
                 uncheckedColor = Color.Gray
             )
         )
-        Text(text = if (checkedState) "Checked" else "Unchecked")
+        Text(text = if (checkedState) "Checked" else "Unchecked"
+        )
     }
 }
-
-//@Composable
-//fun ButtonComponent(value: String, isEnabled: Boolean = false) {
-//    val context = LocalContext.current
-//    Button(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(10.dp),
-//        contentPadding = PaddingValues(15.dp),
-//        onClick = {
-//            val intent = Intent(context, HomeActivity::class.java)
-//            context.startActivity(intent)
-//        },
-//        enabled = isEnabled
-//    ) {
-//        Text(
-//            text = value,
-//            fontSize = 20.sp,
-//            fontWeight = FontWeight.Bold
-//        )
-//    }
-//}
-
-
-// input text fields
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun InputTextFields(labelValue: String, painterResource: Painter) {
-//    // initialize the variable for entered text
-//    Column() {
-//        val textValue = remember { mutableStateOf("") }
-//        OutlinedTextField(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(top = 5.dp),
-//            label = { Text(text = labelValue) }, // init text
-//            value = textValue.value,
-//            colors = TextFieldDefaults.outlinedTextFieldColors(
-//                focusedBorderColor = Purple,
-//                focusedLabelColor = Purple,
-//                cursorColor = Purple
-//            ),
-//            keyboardOptions = KeyboardOptions.Default,
-//            onValueChange = {
-//                textValue.value = it
-//            },
-//            leadingIcon = {
-//                Icon(painter = painterResource, contentDescription = "")
-//            }
-//        )
-//        Spacer(modifier = Modifier.height(4.dp))
-//        Text(text = "The Fields is empty!", color = Color.Red)
-//    }
-//}
-
-
-// button
-//@Composable
-//fun ButtonComponent(value: String) {
-//    val context = LocalContext.current
-//    Button(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .height(50.dp),
-//        onClick = {
-//            val intent = Intent(context, HomeActivity::class.java)
-//            context.startActivity(intent)
-//        },
-//        contentPadding = PaddingValues(),
-//        colors = ButtonDefaults.buttonColors(Color.Transparent)
-//    ) {
-//        Box(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .background(
-//                    colorResource(id = R.color.purple_500),
-////                    brush = Brush.horizontalGradient(listOf(Color.Blue, Color.Green)), // Gradient color
-//                    shape = RoundedCornerShape(10.dp)
-//                ),
-//            contentAlignment = Alignment.Center
-//        ) {
-//            Text(
-//                text = value,
-//                fontSize = 20.sp,
-//                fontWeight = FontWeight.Bold
-//            )
-//        }
-//    }
-//}

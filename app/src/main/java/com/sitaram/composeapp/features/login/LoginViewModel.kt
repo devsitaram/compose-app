@@ -11,11 +11,11 @@ class LoginViewModel: ViewModel() {
     private val loginModel = LoginModel()
 
     fun loginDetails(userName: String, userPassword: String, context: Context): Boolean? {
-        return if (userName.isEmpty() || userPassword.isEmpty()){
+        return if (userName.isNotEmpty() || userPassword.isNotEmpty()){
+            getUser(userName, userPassword, context)
+        } else {
             Toast.makeText(context, "The fields is empty!", Toast.LENGTH_SHORT).show()
             false
-        } else {
-            return getUser(userName, userPassword, context)
         }
     }
 
@@ -24,6 +24,7 @@ class LoginViewModel: ViewModel() {
         return if (isSuccess == true) {
             true
         } else {
+            Toast.makeText(context, "Invalid username or password", Toast.LENGTH_SHORT).show()
             return false
         }
     }
