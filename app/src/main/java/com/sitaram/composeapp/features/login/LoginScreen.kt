@@ -42,7 +42,6 @@ import com.sitaram.composeapp.features.util.InputTextField
 import com.sitaram.composeapp.features.util.NormalTextComponent
 import com.sitaram.composeapp.features.util.PasswordTextField
 import com.sitaram.composeapp.features.main.User
-import com.sitaram.composeapp.features.util.LoginDesign
 
 // Main/Parent UI design for Sign Up Screen
 @Composable
@@ -73,70 +72,69 @@ fun ViewOfLoginScreen(navController: NavHostController) {
 
     // sign screen page
     Surface(modifier = Modifier.fillMaxSize()) {
-        LoginDesign()
         // child layout file
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(30.dp),
-//        ) {
-//
-//            NormalTextComponent(
-//                text = stringResource(id = R.string.hey),
-//                color = colorResource(id = color.softBlack)
-//            ) // text
-//
-//            HeadingTextComponent(
-//                value = stringResource(id = R.string.login_your_details),
-//                color = colorResource(id = color.black)
-//            )
-//
-//            Spacer(modifier = Modifier.height(50.dp)) // marginTop/space
-//
-//            // username
-//            InputTextField(
-//                userName,
-//                onValueChange = { userName = it },
-//                label = stringResource(id = R.string.userName),
-//                "Enter the valid username"
-//            )
-//
-//            // password
-//            PasswordTextField(
-//                userPassword,
-//                painterResource = painterResource(id = R.drawable.ic_lock),
-//                onValueChange = { userPassword = it },
-//                label = stringResource(id = R.string.userPassword)
-//            )
-//
-//            // checkbox
-//            CheckboxComponent()
-//
-//            Spacer(modifier = Modifier.height(30.dp))
-//
-//            // login button
-//            LoginButton(
-//                value = stringResource(id = R.string.login),
-//                onClickAction = onLoginClick
-//            )
-//
-//            Spacer(modifier = Modifier.height(50.dp))
-//            Divider(modifier = Modifier.fillMaxWidth()) // divider
-//            // register text
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                horizontalArrangement = Arrangement.Center
-//            ) {
-//                NormalTextComponent(
-//                    text = stringResource(id = R.string.register_your),
-//                    color = colorResource(id = color.softBlack)
-//                )
-//                RegisterTextComponent(
-//                    value = stringResource(id = R.string.account),
-//                    navController = navController
-//                )
-//            }
-//        }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(30.dp),
+        ) {
+
+            NormalTextComponent(
+                text = stringResource(id = R.string.hey),
+                color = colorResource(id = color.softBlack)
+            ) // text
+
+            HeadingTextComponent(
+                value = stringResource(id = R.string.login_your_details),
+                color = colorResource(id = color.black)
+            )
+
+            Spacer(modifier = Modifier.height(50.dp)) // marginTop/space
+
+            // username
+            InputTextField(
+                userName,
+                onValueChange = { userName = it },
+                label = stringResource(id = R.string.userName),
+                "Enter the valid username"
+            )
+
+            // password
+            PasswordTextField(
+                userPassword,
+                painterResource = painterResource(id = R.drawable.ic_lock),
+                onValueChange = { userPassword = it },
+                label = stringResource(id = R.string.userPassword)
+            )
+
+            // checkbox
+            CheckboxComponent()
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            // login button
+            LoginButton(
+                value = stringResource(id = R.string.login),
+                onClickAction = onLoginClick
+            )
+
+            Spacer(modifier = Modifier.height(50.dp))
+            Divider(modifier = Modifier.fillMaxWidth()) // divider
+            // register text
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                NormalTextComponent(
+                    text = stringResource(id = R.string.register_your),
+                    color = colorResource(id = color.softBlack)
+                )
+                RegisterTextComponent(
+                    value = stringResource(id = R.string.account),
+                    navController = navController
+                )
+            }
+        }
     }
 }
 

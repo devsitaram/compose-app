@@ -9,6 +9,7 @@ class SignUpViewModel: ViewModel() {
 
     private val signUpModel = SignUpModel()
     private val validation = Validation()
+
     // register function
     fun registerDetail(userEmail: String, userName: String, userPassword: String, context: Context): Boolean {
 

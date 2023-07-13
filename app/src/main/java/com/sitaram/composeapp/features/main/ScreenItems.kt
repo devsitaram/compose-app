@@ -3,6 +3,7 @@ package com.sitaram.composeapp.features.main
 import com.sitaram.composeapp.R
 
 sealed class User(var route: String) {
+    object Slider : User("Slider")
     object Login : User("Login")
     object Register : User("Register")
     object Main: User("Main")

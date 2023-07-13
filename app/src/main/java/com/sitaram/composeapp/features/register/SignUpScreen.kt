@@ -64,7 +64,7 @@ fun ViewOfSignUpScreen(navController: NavHostController){
     // if the input fields are not empty then the button is visible
     val isNotEmpty by remember {
         derivedStateOf {
-            userEmail.isNotEmpty() && !userName.isEmpty() && !userPassword.isEmpty()
+            userEmail.isNotEmpty() && userName.isNotEmpty() && userPassword.isNotEmpty()
         }
     }
 

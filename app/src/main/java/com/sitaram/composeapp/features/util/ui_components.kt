@@ -97,7 +97,7 @@ fun InputTextField(
                 Text(label)
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedLabelColor = Purple,
+//                focusedLabelColor = Purple,
                 cursorColor = Purple
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
@@ -134,8 +134,8 @@ fun PasswordTextField(
                 Text(label)
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Purple,
-                focusedLabelColor = Purple,
+//                focusedBorderColor = Purple,
+//                focusedLabelColor = Purple,
                 cursorColor = Purple
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),

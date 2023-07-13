@@ -22,6 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sitaram.composeapp.features.game.GameScreen
 import com.sitaram.composeapp.features.home.HomeScreen
+import com.sitaram.composeapp.features.intro.ViewOfIntroSlider
 import com.sitaram.composeapp.features.login.ViewOfLoginScreen
 import com.sitaram.composeapp.features.message.MessageScreen
 import com.sitaram.composeapp.features.profile.ProfileScreen
@@ -30,7 +31,9 @@ import com.sitaram.composeapp.features.setting.SettingsScreen
 
 @Composable
 fun NavigationAppHost(navController: NavHostController) {
+
     NavHost(navController = navController, startDestination = "Login") {
+
         // login
         composable(User.Login.route) {
             ViewOfLoginScreen(navController)
@@ -48,17 +51,24 @@ fun NavigationAppHost(navController: NavHostController) {
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ViewOfMainPage() {
     val navController = rememberNavController()
-    val items = listOf(ScreenItem.Home, ScreenItem.Profile, ScreenItem.Message, ScreenItem.Game, ScreenItem.Setting,)
+    val pages = listOf(
+        ScreenItem.Home,
+        ScreenItem.Profile,
+        ScreenItem.Message,
+        ScreenItem.Game,
+        ScreenItem.Setting
+    )
     Scaffold(
         bottomBar = {
             BottomNavigation {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
-                items.forEach { screen ->
+                pages.forEach { screen ->
                     BottomNavigationItem(modifier = Modifier.background(color = Color.White),
                         icon = {
                             Icon(
@@ -91,7 +101,11 @@ fun ViewOfMainPage() {
             }
         }
     ) { innerPadding ->
-        NavHost(navController, startDestination = ScreenItem.Home.route, Modifier.padding(innerPadding)) {
+        NavHost(
+            navController,
+            startDestination = ScreenItem.Home.route,
+            Modifier.padding(innerPadding)
+        ) {
             composable(ScreenItem.Home.route) { HomeScreen() }
             composable(ScreenItem.Profile.route) { ProfileScreen() }
             composable(ScreenItem.Message.route) { MessageScreen() }
