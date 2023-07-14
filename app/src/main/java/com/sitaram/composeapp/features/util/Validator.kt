@@ -1,6 +1,6 @@
 package com.sitaram.composeapp.features.util
 
-class Validation {
+class Validator {
 
     // check the username validation
     fun emailValidation(email: String): Boolean {

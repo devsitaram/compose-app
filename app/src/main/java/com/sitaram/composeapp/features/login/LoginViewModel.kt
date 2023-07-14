@@ -19,7 +19,7 @@ class LoginViewModel: ViewModel() {
         }
     }
 
-    private fun getUser(userName: String, userPassword: String, context: Context): Boolean? {
+    private fun getUser(userName: String, userPassword: String, context: Context): Boolean {
         val isSuccess = loginModel.getLoginUser(userName, userPassword, context)
         return if (isSuccess == true) {
             true

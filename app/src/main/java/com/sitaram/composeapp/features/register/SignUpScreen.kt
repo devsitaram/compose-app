@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.sitaram.composeapp.R
-import com.sitaram.composeapp.features.main.User
 import com.sitaram.composeapp.features.util.HeadingTextComponent
 import com.sitaram.composeapp.features.util.InputTextField
 import com.sitaram.composeapp.features.util.NormalTextComponent
@@ -49,22 +48,22 @@ import com.sitaram.composeapp.features.util.PasswordTextField
 fun ViewOfSignUpScreen(navController: NavHostController){
 
     val context = LocalContext.current
-    var userEmail by remember {
+    var email by remember {
         mutableStateOf("")
     }
 
-    var userName by remember {
+    var name by remember {
         mutableStateOf("")
     }
 
-    var userPassword by remember {
+    var password by remember {
         mutableStateOf("")
     }
 
     // if the input fields are not empty then the button is visible
     val isNotEmpty by remember {
         derivedStateOf {
-            userEmail.isNotEmpty() && userName.isNotEmpty() && userPassword.isNotEmpty()
+            email.isNotEmpty() && name.isNotEmpty() && password.isNotEmpty()
         }
     }
 
@@ -72,9 +71,9 @@ fun ViewOfSignUpScreen(navController: NavHostController){
     val onClickAction: () -> Unit = {
         if (isNotEmpty) {
             val signUpViewModel = SignUpViewModel()
-            val isValidRegister = signUpViewModel.registerDetail(userEmail, userName, userPassword, context)
+            val isValidRegister = signUpViewModel.registerDetail(email, name, password, context)
             if (isValidRegister){
-                navController.navigate(User.Login.route)
+                navController.navigate("Login")
             }
         } else {
             Toast.makeText(context, "The fields is empty!", Toast.LENGTH_LONG).show()
@@ -108,16 +107,17 @@ fun ViewOfSignUpScreen(navController: NavHostController){
             Spacer(modifier = Modifier.height(40.dp)) // marginTop/space
             // email
             InputTextField(
-                userEmail,
-                onValueChange = { userEmail = it },
+                email,
+                onValueChange = { email = it },
                 label = stringResource(id = R.string.userEmail),
                 "Enter the valid email"
             )
 
+            Spacer(modifier = Modifier.padding(top = 10.dp))
             // username
             InputTextField(
-                userName,
-                onValueChange = { userName = it },
+                name,
+                onValueChange = { name = it },
                 label = stringResource(id = R.string.userName),
                 "Enter the valid username"
             )
@@ -125,9 +125,9 @@ fun ViewOfSignUpScreen(navController: NavHostController){
             Spacer(modifier = Modifier.padding(top = 10.dp))
             // password
             PasswordTextField(
-                userPassword,
+                password,
                 painterResource = painterResource(id = R.drawable.ic_lock),
-                onValueChange = { userPassword = it },
+                onValueChange = { password = it },
                 label = stringResource(id = R.string.userPassword)
             )
 
@@ -193,7 +193,7 @@ fun LoginTextComponent(text: String, navController: NavHostController) {
         ),
 
         onClick = {
-            navController.navigate(User.Login.route)
+            navController.navigate("Login")
         },
     )
 }

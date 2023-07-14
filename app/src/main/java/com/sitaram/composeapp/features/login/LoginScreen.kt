@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_EXPRESSION")
+
 package com.sitaram.composeapp.features.login
 
 import android.widget.Toast
@@ -12,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
@@ -22,7 +23,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -31,10 +31,11 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.sitaram.composeapp.R
 import com.sitaram.composeapp.R.color
 import com.sitaram.composeapp.features.util.CheckboxComponent
@@ -42,27 +43,28 @@ import com.sitaram.composeapp.features.util.HeadingTextComponent
 import com.sitaram.composeapp.features.util.InputTextField
 import com.sitaram.composeapp.features.util.NormalTextComponent
 import com.sitaram.composeapp.features.util.PasswordTextField
-import com.sitaram.composeapp.features.main.User
+import com.sitaram.composeapp.features.util.DialogBox
 
 // Main/Parent UI design for Sign Up Screen
 @Composable
-fun ViewOfLoginScreen(navController: NavHostController) {
+fun ViewOfLoginScreen(navController: NavController) {
 
     val context = LocalContext.current
     val loginViewModel = LoginViewModel()
 
-    var userName by remember { mutableStateOf("") }
-    var userPassword by remember { mutableStateOf("") }
+    val showDialog = remember { mutableStateOf(false) }
+    var name by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     // Login button click handler
     val onLoginClick: () -> Unit = {
-        val isValidLogin = loginViewModel.loginDetails(userName, userPassword, context)
+        val isValidLogin = loginViewModel.loginDetails(name, password, context)
         if (isValidLogin == true) {
             // Navigate to the home screen
-            navController.navigate(User.Main.route) {
-                // Kill the Login screen
-                popUpTo(User.Login.route) {
-                    inclusive = true
+            navController.navigate("Main") {
+                // callback old screen
+                popUpTo("Login") {
+                    inclusive = true // close the previous screen
                 }
             }
             Toast.makeText(context, "Login Successful.", Toast.LENGTH_SHORT).show()
@@ -91,8 +93,8 @@ fun ViewOfLoginScreen(navController: NavHostController) {
 
             // username
             InputTextField(
-                userName,
-                onValueChange = { userName = it },
+                name,
+                onValueChange = { name = it },
                 label = stringResource(id = R.string.userName),
                 "Enter the valid username"
             )
@@ -100,9 +102,9 @@ fun ViewOfLoginScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.padding(top = 10.dp))
             // password
             PasswordTextField(
-                userPassword,
+                password,
                 painterResource = painterResource(id = R.drawable.ic_lock),
-                onValueChange = { userPassword = it },
+                onValueChange = { password = it },
                 label = stringResource(id = R.string.userPassword)
             )
 
@@ -115,6 +117,11 @@ fun ViewOfLoginScreen(navController: NavHostController) {
             LoginButton(
                 value = stringResource(id = R.string.login),
                 onClickAction = onLoginClick
+            )
+
+            ForgotPasswordText(
+                value = "Forgot password?",
+//                onLoginClick = { showDialog.value = true }
             )
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -135,6 +142,10 @@ fun ViewOfLoginScreen(navController: NavHostController) {
                     navController = navController
                 )
             }
+
+            if (showDialog.value) {
+                DialogBox(onDismiss = { showDialog.value = false })
+            }
         }
     }
 }
@@ -146,37 +157,31 @@ fun LoginButton(value: String, onClickAction: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent) // Change the button color here
+//        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent) // Change the button color here
     ) {
         Text(
-            fontSize = 20.sp,
+            fontSize = 15.sp,
             text = value,
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(5.dp)
         )
     }
-//    Button(
-//        onClick = onClickAction,
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(10.dp),
-//    ) {
-//        Text(
-//            fontSize = 20.sp,
-//            text = value,
-//            fontWeight = FontWeight.SemiBold,
-//            color = DefaultShadowColor
-//        )
-//    }
-//    Button(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(10.dp),
-//        contentPadding = PaddingValues(15.dp),
-//        onClick = onClickAction,
-//    ) {
-//        Text(text = value, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
-//    }
+}
+
+@Composable
+fun ForgotPasswordText(value: String) {
+    ClickableText(
+        text = AnnotatedString(value),
+        modifier = Modifier
+            .wrapContentHeight()
+            .padding(start = 15.dp),
+        style = TextStyle(
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal
+        ),
+        onClick = {}
+    )
 }
 
 // account
@@ -193,7 +198,7 @@ fun RegisterTextComponent(value: String, navController: NavController) {
             fontStyle = FontStyle.Normal
         ),
         onClick = {
-            navController.navigate(User.Register.route)
+            navController.navigate("Register")
         }
     )
 }

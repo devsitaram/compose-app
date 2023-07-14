@@ -261,13 +261,6 @@ fun Calculation() {
     var formattedTotalPayableAmount = "0"
     var formattedCostPericePerShare = "0"
 
-//    var shareAmount = 0.0
-//    var SEBONCommission = 0.0
-//    var brokerCommission = 10.0
-//    val DP_Fee = 25.0
-//    var totalPayableAmount = 0.0
-//    var costPericePerShare = 0.0
-
     if (buyingPrice.isNotEmpty() && noOfShares.isNotEmpty()) {
         if (buyingPrice.isNotEmpty() && noOfShares.isNotEmpty()) {
 

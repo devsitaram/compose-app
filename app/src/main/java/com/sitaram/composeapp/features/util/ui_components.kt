@@ -1,5 +1,6 @@
 package com.sitaram.composeapp.features.util
 
+import android.app.Activity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,7 +30,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -189,4 +194,30 @@ fun CheckboxComponent() {
         Text(text = if (checkedState) "Checked" else "Unchecked"
         )
     }
+}
+
+// logout dialog box
+@Composable
+fun DialogBox(onDismiss: () -> Unit) {
+    val activity = (LocalContext.current as Activity)
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = { Text(stringResource(id = R.string.logout)) },
+        text = { Text(text = "Are you sure you want to log out?") },
+        modifier = Modifier.fillMaxWidth(),
+        dismissButton = {
+            TextButton(
+                onClick = { onDismiss() }
+            ) {
+                Text(text = "No")
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { activity.finish() }
+            ) {
+                Text(text = "Yes")
+            }
+        }
+    )
 }

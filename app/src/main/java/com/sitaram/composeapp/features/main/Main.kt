@@ -35,17 +35,21 @@ fun NavigationAppHost(navController: NavHostController) {
     NavHost(navController = navController, startDestination = "Login") {
 
         // login
-        composable(User.Login.route) {
+//        composable(User.Login.route) {
+//            ViewOfLoginScreen(navController)
+//        }
+
+        composable("Login"){
             ViewOfLoginScreen(navController)
         }
 
         // register page
-        composable(User.Register.route) {
+        composable("Register") {
             ViewOfSignUpScreen(navController)
         }
 
         // main screen
-        composable(User.Main.route) {
+        composable("Main") {
             ViewOfMainPage()
         }
     }

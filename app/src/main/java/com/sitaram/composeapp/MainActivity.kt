@@ -12,14 +12,12 @@ import com.sitaram.composeapp.ui.theme.ComposeAppTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // use the getSharedPreferences class
 
 //        val getSharedPreferences = getSharedPreferences("selfPrefs", MODE_PRIVATE)
 //        val hasIntroSlider: Boolean = getSharedPreferences.getBoolean("has_view_slider", false)
 
         setContent {
             ComposeAppTheme {
-                // A surface container using the 'background' color from the theme
                 installSplashScreen() // splash screen
                 val navController = rememberNavController()
                 NavigationAppHost(navController)

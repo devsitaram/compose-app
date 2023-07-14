@@ -26,15 +26,10 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.sitaram.composeapp.R
-import com.sitaram.composeapp.features.login.ViewOfLoginScreen
-import com.sitaram.composeapp.features.main.NavigationAppHost
-import com.sitaram.composeapp.features.main.User
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +58,7 @@ fun ViewOfIntroSlider(navController: NavHostController) {
             ) {
                 Button(
                     onClick = {
-                        navController.navigate(User.Login.route)
+                        navController.navigate("Login")
                     },
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.softBlue)),
                 ) {

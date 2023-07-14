@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.widget.Toast
 import java.sql.SQLException
 
 class SQLiterDBHelper : SQLiteOpenHelper {
@@ -29,7 +30,7 @@ class SQLiterDBHelper : SQLiteOpenHelper {
         // create the database table
         db.execSQL(
             " CREATE TABLE " + TABLE_NAME +
-                    "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_EMAIL + " TEXT, " + KEY_NAME + " TEXT, " + KEY_PASSWORD + " TEXT " + ")"
+                    "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_EMAIL + " TEXT UNIQUE, " + KEY_NAME + " TEXT, " + KEY_PASSWORD + " TEXT " + ")"
         )
     }
 
@@ -57,7 +58,7 @@ class SQLiterDBHelper : SQLiteOpenHelper {
 
     // get data from database
     @SuppressLint("Recycle")
-    fun getLoginUsers(name: String, password: String): Boolean? {
+    fun getLoginUsers(name: String, password: String): Boolean {
         // create the object of sqLiteDatabase and call the getReadableDatabase methods
         val sqLiteDatabase = this.readableDatabase
         val cursor = sqLiteDatabase.rawQuery("SELECT * FROM $TABLE_NAME", null)
