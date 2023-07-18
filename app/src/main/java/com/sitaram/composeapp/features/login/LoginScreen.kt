@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED_EXPRESSION")
-
 package com.sitaram.composeapp.features.login
 
 import android.widget.Toast
@@ -31,11 +29,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.sitaram.composeapp.R
 import com.sitaram.composeapp.R.color
 import com.sitaram.composeapp.features.util.CheckboxComponent
@@ -53,13 +49,14 @@ fun ViewOfLoginScreen(navController: NavController) {
     val loginViewModel = LoginViewModel()
 
     val showDialog = remember { mutableStateOf(false) }
+
     var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     // Login button click handler
     val onLoginClick: () -> Unit = {
         val isValidLogin = loginViewModel.loginDetails(name, password, context)
-        if (isValidLogin == true) {
+        if (isValidLogin) {
             // Navigate to the home screen
             navController.navigate("Main") {
                 // callback old screen
@@ -121,7 +118,7 @@ fun ViewOfLoginScreen(navController: NavController) {
 
             ForgotPasswordText(
                 value = "Forgot password?",
-//                onLoginClick = { showDialog.value = true }
+                onClickAction = {showDialog.value = true}
             )
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -169,7 +166,7 @@ fun LoginButton(value: String, onClickAction: () -> Unit) {
 }
 
 @Composable
-fun ForgotPasswordText(value: String) {
+fun ForgotPasswordText(value: String, onClickAction: (Int) -> Unit) {
     ClickableText(
         text = AnnotatedString(value),
         modifier = Modifier
@@ -180,7 +177,7 @@ fun ForgotPasswordText(value: String) {
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal
         ),
-        onClick = {}
+        onClick = onClickAction,
     )
 }
 

@@ -3,14 +3,13 @@ package com.sitaram.composeapp.features.login
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
-import com.sitaram.composeapp.features.login.LoginModel
 
 class LoginViewModel: ViewModel() {
 
     // create the object of Login Model class
     private val loginModel = LoginModel()
 
-    fun loginDetails(userName: String, userPassword: String, context: Context): Boolean? {
+    fun loginDetails(userName: String, userPassword: String, context: Context): Boolean {
         return if (userName.isNotEmpty() || userPassword.isNotEmpty()){
             getUser(userName, userPassword, context)
         } else {
