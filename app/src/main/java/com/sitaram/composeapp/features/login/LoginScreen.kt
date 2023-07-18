@@ -40,6 +40,7 @@ import com.sitaram.composeapp.features.util.InputTextField
 import com.sitaram.composeapp.features.util.NormalTextComponent
 import com.sitaram.composeapp.features.util.PasswordTextField
 import com.sitaram.composeapp.features.util.DialogBox
+import com.sitaram.composeapp.features.util.NormalButton
 
 // Main/Parent UI design for Sign Up Screen
 @Composable
@@ -47,8 +48,6 @@ fun ViewOfLoginScreen(navController: NavController) {
 
     val context = LocalContext.current
     val loginViewModel = LoginViewModel()
-
-    val showDialog = remember { mutableStateOf(false) }
 
     var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -111,14 +110,14 @@ fun ViewOfLoginScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(30.dp))
 
             // login button
-            LoginButton(
+            NormalButton(
                 value = stringResource(id = R.string.login),
                 onClickAction = onLoginClick
             )
 
             ForgotPasswordText(
                 value = "Forgot password?",
-                onClickAction = {showDialog.value = true}
+                onClickAction = { navController.navigate("ForgotPassword") }
             )
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -139,29 +138,7 @@ fun ViewOfLoginScreen(navController: NavController) {
                     navController = navController
                 )
             }
-
-            if (showDialog.value) {
-                DialogBox(onDismiss = { showDialog.value = false })
-            }
         }
-    }
-}
-
-@Composable
-fun LoginButton(value: String, onClickAction: () -> Unit) {
-    Button(
-        onClick = onClickAction,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
-//        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent) // Change the button color here
-    ) {
-        Text(
-            fontSize = 15.sp,
-            text = value,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(5.dp)
-        )
     }
 }
 

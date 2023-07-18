@@ -9,8 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.Button
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
@@ -196,6 +195,25 @@ fun CheckboxComponent() {
     }
 }
 
+// normal button
+@Composable
+fun NormalButton(value: String, onClickAction: () -> Unit) {
+    Button(
+        onClick = onClickAction,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+//        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent) // Change the button color here
+    ) {
+        androidx.compose.material.Text(
+            fontSize = 15.sp,
+            text = value,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(5.dp)
+        )
+    }
+}
+
 // logout dialog box
 @Composable
 fun DialogBox(onDismiss: () -> Unit) {
@@ -214,7 +232,7 @@ fun DialogBox(onDismiss: () -> Unit) {
         },
         confirmButton = {
             TextButton(
-                onClick = { activity.finish() }
+                onClick = { onDismiss() }
             ) {
                 Text(text = "Yes")
             }

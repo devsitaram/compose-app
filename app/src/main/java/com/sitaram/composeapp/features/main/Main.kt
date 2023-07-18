@@ -28,6 +28,7 @@ import com.sitaram.composeapp.features.message.MessageScreen
 import com.sitaram.composeapp.features.profile.ProfileScreen
 import com.sitaram.composeapp.features.register.ViewOfSignUpScreen
 import com.sitaram.composeapp.features.setting.SettingsScreen
+import com.sitaram.composeapp.features.update.PasswordUpdateViewScreen
 
 @Composable
 fun NavigationAppHost(navController: NavHostController) {
@@ -46,6 +47,11 @@ fun NavigationAppHost(navController: NavHostController) {
         // register page
         composable("Register") {
             ViewOfSignUpScreen(navController)
+        }
+
+        // register page
+        composable("ForgotPassword") {
+            PasswordUpdateViewScreen()
         }
 
         // main screen

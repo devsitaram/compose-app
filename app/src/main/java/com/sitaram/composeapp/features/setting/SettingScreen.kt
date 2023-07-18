@@ -18,38 +18,26 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontVariation.width
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerState
 import com.sitaram.composeapp.R
-import com.sitaram.composeapp.features.setting.data.TabItem
-import kotlinx.coroutines.launch
-import java.lang.String.format
 import java.text.DecimalFormat
-import kotlin.math.roundToInt
 
 @Composable
 fun SettingsScreen() {
@@ -114,42 +102,41 @@ fun DialogBox(onDismiss: () -> Unit) {
     )
 }
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalPagerApi::class)
-@Composable
-fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
-    val scope = rememberCoroutineScope()
-    // or ScrollableToRow
-    TabRow(
-        selectedTabIndex = pagerState.currentPage,
-        Modifier.background(color = Color.DarkGray),
-        contentColor = Color.White,
-//        indicator = { tabPositions ->
-//            TabRowDefaults.Indicator(
-////                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+//@OptIn(ExperimentalPagerApi::class, ExperimentalPagerApi::class)
+//@Composable
+//fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
+//    val scope = rememberCoroutineScope()
+//    // or ScrollableToRow
+//    TabRow(
+//        selectedTabIndex = pagerState.currentPage,
+//        Modifier.background(color = Color.DarkGray),
+//        contentColor = Color.White,
+////        indicator = { tabPositions ->
+////            TabRowDefaults.Indicator(
+//////                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+////            )
+////        }
+//    ) {
+//        tabs.forEachIndexed { index, tabItem ->
+//            // OR Tab()
+//            LeadingIconTab(
+//                icon = {
+//                    Icon(
+//                        painter = painterResource(id = tabItem.icon),
+//                        contentDescription = ""
+//                    )
+//                },
+//                text = { Text(tabItem.title) },
+//                selected = pagerState.currentPage == index,
+//                onClick = {
+//                    scope.launch {
+//                        pagerState.animateScrollToPage(index)
+//                    }
+//                },
 //            )
 //        }
-    ) {
-        tabs.forEachIndexed { index, tabItem ->
-            // OR Tab()
-            LeadingIconTab(
-                icon = {
-                    Icon(
-                        painter = painterResource(id = tabItem.icon),
-                        contentDescription = ""
-                    )
-                },
-                text = { Text(tabItem.title) },
-                selected = pagerState.currentPage == index,
-                onClick = {
-                    scope.launch {
-                        pagerState.animateScrollToPage(index)
-                    }
-                },
-            )
-        }
-    }
-}
-
+//    }
+//}
 
 //@OptIn(ExperimentalFoundationApi::class)
 //@ExperimentalPagerApi
@@ -228,19 +215,6 @@ fun BooksScreen() {
     }
 }
 
-@Composable
-fun NewsScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color.Green),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(text = "Book Screen")
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
@@ -257,23 +231,22 @@ fun Calculation() {
     var formattedShareAmount =  "0"
     var formattedSEBONCommission = "0"
     var formattedBrokerCommission = "0"
-    val DP_Fee = 25.0
+    val dpFee = 25.0
     var formattedTotalPayableAmount = "0"
     var formattedCostPericePerShare = "0"
 
     if (buyingPrice.isNotEmpty() && noOfShares.isNotEmpty()) {
         if (buyingPrice.isNotEmpty() && noOfShares.isNotEmpty()) {
 
-
             val shareAmount = buyingPrice.toDouble() * noOfShares.toDouble()
-            val SEBONCommission = ((shareAmount) * 0.015 / 100)
+            val sebonCommission = ((shareAmount) * 0.015 / 100)
             val brokerCommission = (shareAmount * 0.40) / 100
-            val totalPayableAmount = shareAmount + brokerCommission + DP_Fee
+            val totalPayableAmount = shareAmount + brokerCommission + dpFee
             val costPericePerShare = totalPayableAmount / noOfShares.toDouble()
 
             val decimalFormat = DecimalFormat("#.##")
             formattedShareAmount = decimalFormat.format(shareAmount)
-            formattedSEBONCommission = decimalFormat.format(SEBONCommission)
+            formattedSEBONCommission = decimalFormat.format(sebonCommission)
             formattedBrokerCommission = decimalFormat.format(brokerCommission)
             formattedTotalPayableAmount = decimalFormat.format(totalPayableAmount)
             formattedCostPericePerShare = decimalFormat.format(costPericePerShare)
@@ -343,7 +316,7 @@ fun Calculation() {
             ) {
                 Text(text = "DP Fee")
                 Spacer(modifier = Modifier.width(185.dp))
-                Text(text = "Rs $DP_Fee")
+                Text(text = "Rs $dpFee")
             }
 
             Row(
