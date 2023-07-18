@@ -110,7 +110,7 @@ fun ViewOfSignUpScreen(navController: NavHostController){
                 email,
                 onValueChange = { email = it },
                 label = stringResource(id = R.string.userEmail),
-                "Enter the valid email"
+                painterResource(R.drawable.ic_email),
             )
 
             Spacer(modifier = Modifier.padding(top = 10.dp))
@@ -119,7 +119,7 @@ fun ViewOfSignUpScreen(navController: NavHostController){
                 name,
                 onValueChange = { name = it },
                 label = stringResource(id = R.string.userName),
-                "Enter the valid username"
+                painterResource(R.drawable.ic_person),
             )
 
             Spacer(modifier = Modifier.padding(top = 10.dp))

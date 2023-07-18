@@ -51,7 +51,7 @@ fun NavigationAppHost(navController: NavHostController) {
 
         // register page
         composable("ForgotPassword") {
-            PasswordUpdateViewScreen()
+            PasswordUpdateViewScreen(navController)
         }
 
         // main screen

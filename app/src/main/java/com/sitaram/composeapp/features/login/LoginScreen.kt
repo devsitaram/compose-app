@@ -92,7 +92,7 @@ fun ViewOfLoginScreen(navController: NavController) {
                 name,
                 onValueChange = { name = it },
                 label = stringResource(id = R.string.userName),
-                "Enter the valid username"
+                painterResource(R.drawable.ic_person),
             )
 
             Spacer(modifier = Modifier.padding(top = 10.dp))

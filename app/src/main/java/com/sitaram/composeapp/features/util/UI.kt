@@ -87,13 +87,13 @@ fun InputTextField(
     value: String,
     onValueChange: (String) -> Unit = {},
     label: String,
-    error: String
+    painterResource: Painter,
 ) {
     Column {
         // if the fields is empty then show error message
         if (value.isEmpty()) {
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = error, color = Color.Red)
+            Text(text = "Enter the valid $label", color = Color.Red)
         }
         // input text fields
         OutlinedTextField(
@@ -113,7 +113,7 @@ fun InputTextField(
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             leadingIcon = {
-                Icon(painter = painterResource(R.drawable.ic_person), contentDescription = "")
+                Icon(painter = painterResource, contentDescription = "")
             },
         )
     }
@@ -133,7 +133,7 @@ fun PasswordTextField(
         // if the fields is empty then show error message
         if (value.isEmpty()) {
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Enter the valid password", color = Color.Red)
+            Text(text = "Enter the valid $label", color = Color.Red)
         }
         OutlinedTextField(
             value = value,
@@ -205,7 +205,7 @@ fun NormalButton(value: String, onClickAction: () -> Unit) {
             .padding(10.dp),
 //        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent) // Change the button color here
     ) {
-        androidx.compose.material.Text(
+        Text(
             fontSize = 15.sp,
             text = value,
             fontWeight = FontWeight.SemiBold,
