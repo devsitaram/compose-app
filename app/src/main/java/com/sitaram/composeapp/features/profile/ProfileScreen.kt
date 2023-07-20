@@ -180,12 +180,9 @@ fun ProfileScreen() {
 @Composable
 fun BasicUiDesign() {
     Column(
-        modifier = Modifier
-            .padding(5.dp),
-//            .verticalScroll(rememberScrollState()),
+        modifier = Modifier.padding(5.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-
         // text field
         InputTextField()
 

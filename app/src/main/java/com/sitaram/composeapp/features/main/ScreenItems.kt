@@ -2,11 +2,12 @@ package com.sitaram.composeapp.features.main
 
 import com.sitaram.composeapp.R
 
-//sealed class User(var route: String) {
-//    object Login : User("Login")
-//    object Register : User("Register")
-//    object Main: User("Main")
-//}
+sealed class User(var route: String) {
+    object Login : User("Login")
+    object Register : User("Register")
+    object ForgotPassword : User("ForgotPassword")
+    object Main: User("Main")
+}
 
 sealed class ScreenItem(var icon: Int, var route: String) {
     object Home : ScreenItem(R.drawable.ic_home, "Home")

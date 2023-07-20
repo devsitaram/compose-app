@@ -13,6 +13,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -22,7 +24,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sitaram.composeapp.features.game.GameScreen
 import com.sitaram.composeapp.features.home.HomeScreen
-import com.sitaram.composeapp.features.intro.ViewOfIntroSlider
 import com.sitaram.composeapp.features.login.ViewOfLoginScreen
 import com.sitaram.composeapp.features.message.MessageScreen
 import com.sitaram.composeapp.features.profile.ProfileScreen
@@ -35,27 +36,22 @@ fun NavigationAppHost(navController: NavHostController) {
 
     NavHost(navController = navController, startDestination = "Login") {
 
-        // login
-//        composable(User.Login.route) {
-//            ViewOfLoginScreen(navController)
-//        }
-
-        composable("Login"){
+        composable(User.Login.route) {
             ViewOfLoginScreen(navController)
         }
 
         // register page
-        composable("Register") {
+        composable(User.Register.route) {
             ViewOfSignUpScreen(navController)
         }
 
         // register page
-        composable("ForgotPassword") {
+        composable(User.ForgotPassword.route) {
             PasswordUpdateViewScreen(navController)
         }
 
         // main screen
-        composable("Main") {
+        composable(User.Main.route) {
             ViewOfMainPage()
         }
     }
@@ -92,7 +88,17 @@ fun ViewOfMainPage() {
                                 }
                             )
                         },
-                        label = { Text(screen.route) },
+                        label = {
+                            Text(
+                                screen.route,
+                                style = TextStyle(fontSize = 10.sp),
+                                color = if (currentDestination?.hierarchy?.any { it.route == screen.route } == true) {
+                                    Color.Black
+                                } else {
+                                    Color.Gray
+                                }
+                            )
+                        },
                         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                         onClick = {
                             navController.navigate(screen.route) {
@@ -110,10 +116,9 @@ fun ViewOfMainPage() {
                 }
             }
         }
-    ) { innerPadding ->
+    ) {innerPadding ->
         NavHost(
-            navController,
-            startDestination = ScreenItem.Home.route,
+            navController, startDestination = ScreenItem.Home.route,
             Modifier.padding(innerPadding)
         ) {
             composable(ScreenItem.Home.route) { HomeScreen() }

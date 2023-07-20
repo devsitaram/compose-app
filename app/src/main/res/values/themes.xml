@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Compose" parent="Theme.SplashScreen">
-        <item name="android:windowSplashScreenBackground">@color/white</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_compose</item>
-        <!--        <item name="android:windowSplashScreenBrandingImage">@mipmap/img_compose</item>-->
-        <!--        <item name="android:windowSplashScreenAnimationDuration">1000</item>-->
-        <item name="postSplashScreenTheme">@style/Theme.Material.Light.NoActionBar</item>
-    </style>
+<!--    <style name="Theme.Compose" parent="Theme.SplashScreen">-->
+<!--        <item name="android:windowSplashScreenBackground">@color/white</item>-->
+<!--        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_compose</item>-->
+<!--        &lt;!&ndash;        <item name="android:windowSplashScreenBrandingImage">@mipmap/img_compose</item>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <item name="android:windowSplashScreenAnimationDuration">1000</item>&ndash;&gt;-->
+<!--        <item name="postSplashScreenTheme">@style/Theme.ComposeApp</item>-->
+<!--    </style>-->
 
-    <style name="Theme.Material.Light.NoActionBar" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.ComposeApp" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Base.Theme.ComposeApp" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

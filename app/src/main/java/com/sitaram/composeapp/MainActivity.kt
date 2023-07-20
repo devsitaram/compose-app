@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ComposeAppTheme {
-                installSplashScreen() // splash screen
+//                installSplashScreen() // splash screen
                 val navController = rememberNavController()
                 NavigationAppHost(navController)
             }

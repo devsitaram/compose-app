@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.sitaram.composeapp.R
+import com.sitaram.composeapp.features.main.User
 import com.sitaram.composeapp.features.util.HeadingTextComponent
 import com.sitaram.composeapp.features.util.InputTextField
 import com.sitaram.composeapp.features.util.NormalTextComponent
@@ -73,7 +74,7 @@ fun ViewOfSignUpScreen(navController: NavHostController){
             val signUpViewModel = SignUpViewModel()
             val isValidRegister = signUpViewModel.registerDetail(email, name, password, context)
             if (isValidRegister){
-                navController.navigate("Login")
+                navController.navigate(User.Login.route)
             }
         } else {
             Toast.makeText(context, "The fields is empty!", Toast.LENGTH_LONG).show()
@@ -193,7 +194,7 @@ fun LoginTextComponent(text: String, navController: NavHostController) {
         ),
 
         onClick = {
-            navController.navigate("Login")
+            navController.navigate(User.Login.route)
         },
     )
 }

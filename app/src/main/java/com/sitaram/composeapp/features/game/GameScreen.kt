@@ -1,17 +1,18 @@
 package com.sitaram.composeapp.features.game
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Card
+import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,15 +21,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import com.sitaram.composeapp.R
 import com.sitaram.composeapp.features.game.pojo.GameItems
 
 
@@ -51,12 +46,21 @@ fun GameScreen() {
         }
     }
 
-    getListOfGames(gameList)
+    // call the composable function
+    getListOfGames(gameList, context)
 }
 
 @SuppressLint("ComposableNaming")
 @Composable
-fun getListOfGames(gameList: MutableState<ArrayList<GameItems>>) {
+fun getListOfGames(gameList: MutableState<ArrayList<GameItems>>, context: Context) {
+
+//    val onClickAction: (Context) -> Unit = { context ->
+//        val intent = Intent(Intent.ACTION_VIEW)
+//        intent.data = Uri.parse("https://www.youtube.com/**chanel**")
+//        intent.setPackage("com.google.android.youtube")
+//        context.startActivity(intent)
+//    }
+
     LazyColumn {
         items(gameList.value.size) {
             Column(
@@ -65,7 +69,8 @@ fun getListOfGames(gameList: MutableState<ArrayList<GameItems>>) {
                     .padding(20.dp)
             ) {
                 Text(text = gameList.value[it].id.toString())
-                Text(text = gameList.value[it].title ?: "title")
+                val title = gameList.value[it].title ?: "title"
+                Text(text = title)
                 Image(
                     painter = rememberAsyncImagePainter(gameList.value[it].thumbnail ?: "image"),
                     contentDescription = null,
@@ -80,8 +85,35 @@ fun getListOfGames(gameList: MutableState<ArrayList<GameItems>>) {
                 Text(text = gameList.value[it].publisher ?: "publisher")
                 Text(text = gameList.value[it].developer ?: "developer")
                 Text(text = gameList.value[it].platform ?: "platform")
+
+                Row(Modifier.fillMaxWidth()) {
+                    // play store button
+                    Button(onClick = {
+                        val webIntent = Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/search?q=$title=apps"))
+                        context.startActivity(webIntent)
+
+//                        val intent = Intent(Intent.ACTION_VIEW)
+//                        intent.data = Uri.parse("https://www.playstore.com/$title")
+//                        intent.setPackage("com.google.android.playstore")
+//                        context.startActivity(intent)
+                    }) {
+                        Text(text = "Play Store")
+                    }
+
+                    // you tube button
+                    Button(onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse("https://www.youtube.com/search?q=$title=games")
+                        intent.setPackage("com.google.android.youtube")
+                        context.startActivity(intent) }) {
+                        Text(text = "YouTube")
+                    }
+                }
             }
-            Divider(modifier = Modifier.fillMaxWidth().padding(20.dp)) // divider
+            Divider(modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)) // divider
         }
     }
 }

@@ -112,14 +112,20 @@ class SQLiterDBHelper : SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             // check the user login details are valid or not
             if (email == cursor.getString(1)) {
+                val userId = cursor.getString(0)
 
-                val userId =  cursor.getString(0)
                 Log.e("User ID: ", userId)
-                sqLiteDatabaseWrite.rawQuery("UPDATE $TABLE_NAME SET $KEY_PASSWORD = $newPassword WHERE $KEY_ID = userId", null)
+
+                val updateQuery = "UPDATE $TABLE_NAME SET $KEY_PASSWORD = ? WHERE $KEY_ID = ?"
+                val args = arrayOf(newPassword, userId)
+
+                sqLiteDatabaseWrite.execSQL(updateQuery, args)
+
                 cursor.close()
                 return true
             }
         }
+
         cursor.close()
         return false
     }

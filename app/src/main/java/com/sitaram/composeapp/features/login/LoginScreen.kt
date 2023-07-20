@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -34,12 +32,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.sitaram.composeapp.R
 import com.sitaram.composeapp.R.color
+import com.sitaram.composeapp.features.main.User
 import com.sitaram.composeapp.features.util.CheckboxComponent
 import com.sitaram.composeapp.features.util.HeadingTextComponent
 import com.sitaram.composeapp.features.util.InputTextField
 import com.sitaram.composeapp.features.util.NormalTextComponent
 import com.sitaram.composeapp.features.util.PasswordTextField
-import com.sitaram.composeapp.features.util.DialogBox
 import com.sitaram.composeapp.features.util.NormalButton
 
 // Main/Parent UI design for Sign Up Screen
@@ -57,9 +55,9 @@ fun ViewOfLoginScreen(navController: NavController) {
         val isValidLogin = loginViewModel.loginDetails(name, password, context)
         if (isValidLogin) {
             // Navigate to the home screen
-            navController.navigate("Main") {
+            navController.navigate(User.Main.route) {
                 // callback old screen
-                popUpTo("Login") {
+                popUpTo(User.Login.route) {
                     inclusive = true // close the previous screen
                 }
             }
@@ -117,7 +115,7 @@ fun ViewOfLoginScreen(navController: NavController) {
 
             ForgotPasswordText(
                 value = "Forgot password?",
-                onClickAction = { navController.navigate("ForgotPassword") }
+                onClickAction = { navController.navigate(User.ForgotPassword.route) }
             )
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -172,7 +170,7 @@ fun RegisterTextComponent(value: String, navController: NavController) {
             fontStyle = FontStyle.Normal
         ),
         onClick = {
-            navController.navigate("Register")
+            navController.navigate(User.Register.route)
         }
     )
 }
